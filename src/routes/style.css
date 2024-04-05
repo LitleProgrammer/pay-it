@@ -3,14 +3,17 @@
 		Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 	--font-mono: 'Fira Mono', monospace;
 	--color-bg-0: rgba(192, 210, 214, 0.579);
-	--color-bg-1: rgba(211, 226, 231, 0.772);
-	--color-bg-2: hsl(224, 44%, 95%);
-	--color-text: rgba(0, 0, 0, 0.7);
+	--color-bg-1: rgba(19, 20, 20, 0.979);
+	--color-bg-2: rgb(27, 28, 28);
+	--color-text: rgba(255, 255, 255, 0.7);
+	--color-acent: rgb(79, 186, 219);
+	--color-red: rgb(219, 79, 79);
+	--color-green: rgb(79, 219, 107);
 	--column-width: 42rem;
 	--column-margin-top: 4rem;
     --focus: rgba(197, 205, 205, 0.545);
     --hover: rgba(121, 119, 119, 0.848);
-    --shaddow: rgb(38, 57, 77) 0px 5px 30px -10px;
+    --shaddow: rgba(158, 165, 171, 0.997) 0px 5px 30px -10px;
 	font-family: var(--font-body);
 	color: var(--color-text);
 }

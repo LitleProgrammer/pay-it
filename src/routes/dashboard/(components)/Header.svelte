@@ -1,6 +1,6 @@
 <script>
 	import { page } from '$app/stores';
-    import '../style.css';
+    import '../../style.css';
     import Fa from 'svelte-fa';
     import { faCircleUser } from '@fortawesome/free-solid-svg-icons';
 </script>
@@ -21,7 +21,7 @@
     </nav>
 
     <div class="user-icon">
-        <a href=""><Fa icon={faCircleUser} 
+        <a href="/dashboard"><Fa icon={faCircleUser} 
             size="2x" 
             pull="left"
         /></a>
