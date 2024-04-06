@@ -3,6 +3,8 @@
     import '../../style.css';
     import Fa from 'svelte-fa';
     import { faPlus } from '@fortawesome/free-solid-svg-icons';
+    import Modal from '../(components)/Modal.svelte';
+    import SearchInput from '../(components)/SearchInput.svelte';
 
     const listData = {
         cols: ["Debtor", "", "Creditor", "Sum", "Reason"],
@@ -33,6 +35,63 @@
             {name: "Bob", sum: -25, reason: "https://link.de", direction: "<"}
         ]
     }
+
+    const mockNames = [
+      "Alice",
+      "Bob",
+      "Catherine",
+      "David",
+      "Emily",
+      "Frank",
+      "Grace",
+      "Henry",
+      "Ivy",
+      "Jack",
+      "Kate",
+      "Liam",
+      "Mia",
+      "Noah",
+      "Olivia",
+      "Peter",
+      "Quinn",
+      "Rachel",
+      "Samuel",
+      "Tracy",
+      "Uma",
+      "Vincent",
+      "Wendy",
+      "Xavier",
+      "Yvonne",
+      "Zachary",
+      "Adam",
+      "Bella",
+      "Carlos",
+      "Diana",
+      "Ethan",
+      "Fiona",
+      "George",
+      "Hannah",
+      "Isaac",
+      "Jasmine",
+      "Kevin",
+      "Linda",
+      "Michael",
+      "Natalie",
+      "Oscar",
+      "Penelope",
+      "Quincy",
+      "Rebecca",
+      "Samantha",
+      "Thomas",
+      "Ursula",
+      "Violet",
+      "William",
+      "Xena",
+      "Yolanda",
+      "Zoe",    
+    ];
+
+    let showModal = false;
 </script>
 
 <div class="manage">
@@ -42,7 +101,14 @@
     
     <div class="sidebar wrapper">
         <div class="buttonWrapper">
-            <button><Fa icon={faPlus}  size="6x" /></button>
+            <button on:click={() => (showModal = true)}><Fa icon={faPlus}  size="6x" /></button>
+            <div class="modalWrapper">
+                <Modal bind:showModal>
+                    <form method="POST">
+                        <SearchInput placeholder="User" data={mockNames}/>
+                    </form>
+                </Modal>
+            </div>
         </div>
     </div>
     
@@ -98,11 +164,14 @@
         border-radius: 40px;
         border: none;
         width: 40%;
-        background-color: var(--color-acent);
+        background-color: var(--color-bg-0);
+        transition: 0.2s linear;
+        color: var(--color-text);
     }
 
     .sidebar button:hover {
         cursor: pointer;
+        background-color: var(--hover);
     }
 
     .openList {
