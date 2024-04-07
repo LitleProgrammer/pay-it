@@ -5,6 +5,7 @@
     import { faPlus } from '@fortawesome/free-solid-svg-icons';
     import Modal from '../(components)/Modal.svelte';
     import SearchInput from '../(components)/SearchInput.svelte';
+    import NewDebtForm from '../(components)/NewDebtForm.svelte';
 
     const listData = {
         cols: ["Debtor", "", "Creditor", "Sum", "Reason"],
@@ -36,61 +37,6 @@
         ]
     }
 
-    const mockNames = [
-      "Alice",
-      "Bob",
-      "Catherine",
-      "David",
-      "Emily",
-      "Frank",
-      "Grace",
-      "Henry",
-      "Ivy",
-      "Jack",
-      "Kate",
-      "Liam",
-      "Mia",
-      "Noah",
-      "Olivia",
-      "Peter",
-      "Quinn",
-      "Rachel",
-      "Samuel",
-      "Tracy",
-      "Uma",
-      "Vincent",
-      "Wendy",
-      "Xavier",
-      "Yvonne",
-      "Zachary",
-      "Adam",
-      "Bella",
-      "Carlos",
-      "Diana",
-      "Ethan",
-      "Fiona",
-      "George",
-      "Hannah",
-      "Isaac",
-      "Jasmine",
-      "Kevin",
-      "Linda",
-      "Michael",
-      "Natalie",
-      "Oscar",
-      "Penelope",
-      "Quincy",
-      "Rebecca",
-      "Samantha",
-      "Thomas",
-      "Ursula",
-      "Violet",
-      "William",
-      "Xena",
-      "Yolanda",
-      "Zoe",    
-    ];
-
     let showModal = false;
 </script>
 
@@ -104,9 +50,7 @@
             <button on:click={() => (showModal = true)}><Fa icon={faPlus}  size="6x" /></button>
             <div class="modalWrapper">
                 <Modal bind:showModal>
-                    <form method="POST">
-                        <SearchInput placeholder="User" data={mockNames}/>
-                    </form>
+                    <NewDebtForm />
                 </Modal>
             </div>
         </div>

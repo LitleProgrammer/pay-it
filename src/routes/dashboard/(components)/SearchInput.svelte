@@ -1,10 +1,16 @@
 <script lang="ts">
+
+    interface $Props extends HTMLInputElement {
+        
+    }
+
     export var data: string[];
     export var placeholder: string;
+    export let setValue: (selected: string) => void;
 
-    var inputValue: string;
     var input: HTMLInputElement;
     var isFocussed: boolean = true;
+    var inputValue = '';
 
     var suggestions: string[] = [];
 
@@ -21,6 +27,7 @@
 
     const setInputValue = (selected: string) => {
         inputValue = selected;
+        setValue(selected);
         if (isFocussed) {
             isFocussed = false;
             input.blur();
@@ -40,14 +47,19 @@
         }
     }
 
+    const handleBlur = () => {
+        setTimeout(() => {
+            isFocussed = false;
+        }, 100);
+    }
 </script>
 
-<input type="text" name="" id="" placeholder="{placeholder}" bind:value={inputValue} on:keyup={inputChange} bind:this={input} on:focus={() => isFocussed = true} >
+<input type="text" name="" id="" placeholder="{placeholder}" bind:value={inputValue} on:keyup={inputChange} bind:this={input} on:focus={() => isFocussed = true} on:blur={handleBlur}>
 
 {#if suggestions.length > 0 && isFocussed}
     <ul>
         {#each suggestions as suggestion}
-            <li class="suggesion" on:click={() => setInputValue(suggestion)}>{suggestion}</li>
+            <li class="suggesion"><button type="button" on:click={() => setInputValue(suggestion)} >{suggestion}</button></li>
         {/each}
     </ul>
 {/if}
@@ -80,6 +92,16 @@
         padding: 0;
         top: 0;
         padding-top: 2%;
+        max-height: 25vh;
+        overflow-y: scroll;
+    }
+
+    button {
+        background-color: rgb(0, 0, 0, 0);
+        border: none;
+        cursor: pointer;
+        font: var(--font-body);
+        color: var(--color-text);
     }
 
     li {
