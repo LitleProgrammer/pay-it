@@ -1,9 +1,5 @@
 <script lang="ts">
 
-    interface $Props extends HTMLInputElement {
-        
-    }
-
     export var data: string[];
     export var placeholder: string;
     export let setValue: (selected: string) => void;
@@ -24,6 +20,8 @@
             });
         }
     }
+
+
 
     const setInputValue = (selected: string) => {
         inputValue = selected;
@@ -53,6 +51,8 @@
         }, 100);
     }
 </script>
+
+<slot />
 
 <input type="text" name="" id="" placeholder="{placeholder}" bind:value={inputValue} on:keyup={inputChange} bind:this={input} on:focus={() => isFocussed = true} on:blur={handleBlur}>
 

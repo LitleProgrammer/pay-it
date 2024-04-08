@@ -1,8 +1,9 @@
-export const POST = async ({ request }) => {
-    const formData = await request.formData();
+import type { Actions } from './$types';
 
-    return {
-        status: 200,
-        body: JSON.stringify({ message: 'Form submitted successfully' })
-    };
-};
+export const actions = {
+	default: async ({ cookies, request }) => {
+		const data = await request.formData();
+        const userName = data.get('username');
+        console.log(userName)
+	},
+} satisfies Actions;
