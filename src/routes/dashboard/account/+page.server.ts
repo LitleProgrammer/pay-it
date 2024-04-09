@@ -16,3 +16,13 @@ export async function load({ cookies, params }) {
     
     return {user: json};
 }
+
+
+export const actions = {
+	default: async ({ cookies, request }) => {
+		const data = await request.formData();
+        cookies.delete('userID', { path: '/' });
+        cookies.delete('sessionID', { path: '/' });
+        throw redirect(302, '/login')
+	}
+};
