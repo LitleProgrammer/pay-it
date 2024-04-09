@@ -27,9 +27,11 @@
     }
 </script>
 
-<form>
+<form method="POST">
+    <label for="username">The email of the user</label>
+
     <input type="hidden" name="username" bind:value={username}/>
-    <SearchInput placeholder="User" data={mockNames} setValue={setUsername}/> <br> <br> <br>
+    <SearchInput placeholder="Email" data={mockNames} setValue={setUsername}/> <br> <br> <br>
     <button type="submit">Submit</button>
 </form>
 

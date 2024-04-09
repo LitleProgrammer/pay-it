@@ -9,10 +9,3 @@ export async function load({ cookies }) {
         throw redirect(303, '/login')
     }
 }
-
-export const actions = {
-	default: async ({ cookies, request }) => {
-		const data = await request.formData();
-        const userName = data.get('username');
-	},
-};

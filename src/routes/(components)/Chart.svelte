@@ -1,12 +1,12 @@
 <script>
   import { LayerCake, Svg, Html } from 'layercake';
 
-  import Line from '../_charts/Line.svelte';
-  import Area from '../_charts/Area.svelte';
-  import AxisX from '../_charts/AxisX.svelte';
-  import AxisY from '../_charts/AxisY.svelte';
-  import Labels from '../_charts/GroupLabels.html.svelte';
-  import SharedTooltip from '../_charts/SharedTooltip.svelte';
+  import Line from '../dashboard/_charts/Line.svelte';
+  import Area from '../dashboard/_charts/Area.svelte';
+  import AxisX from '../dashboard/_charts/AxisX.svelte';
+  import AxisY from '../dashboard/_charts/AxisY.svelte';
+  import Labels from '../dashboard/_charts/GroupLabels.html.svelte';
+  import SharedTooltip from '../dashboard/_charts/SharedTooltip.svelte';
 
     // Define some data
     export var data = [

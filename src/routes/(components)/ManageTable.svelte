@@ -1,5 +1,5 @@
 <script lang="ts">
-    import '../../style.css';
+    import '../style.css';
     import Fa from 'svelte-fa';
     import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
 

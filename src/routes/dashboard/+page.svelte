@@ -1,6 +1,6 @@
 <script>
-    import Chart from "./(components)/Chart.svelte";
-    import List from "./(components)/MoneyTable.svelte";
+    import Chart from "../(components)/Chart.svelte";
+    import List from "../(components)/MoneyTable.svelte";
     import "../style.css";
 
     const data = [

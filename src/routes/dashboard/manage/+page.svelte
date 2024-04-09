@@ -1,11 +1,11 @@
 <script>
-    import Table from '../(components)/ManageTable.svelte';
+    import Table from '../../(components)/ManageTable.svelte';
     import '../../style.css';
     import Fa from 'svelte-fa';
     import { faPlus } from '@fortawesome/free-solid-svg-icons';
-    import Modal from '../(components)/Modal.svelte';
-    import SearchInput from '../(components)/SearchInput.svelte';
-    import NewDebtForm from '../(components)/NewDebtForm.svelte';
+    import Modal from '../../(components)/Modal.svelte';
+    import SearchInput from '../../(components)/SearchInput.svelte';
+    import NewDebtForm from '../../(components)/NewDebtForm.svelte';
 
     const listData = {
         cols: ["Debtor", "", "Creditor", "Sum", "Reason"],

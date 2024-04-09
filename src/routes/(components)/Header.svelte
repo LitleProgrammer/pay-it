@@ -1,6 +1,6 @@
 <script>
 	import { page } from '$app/stores';
-    import '../../style.css';
+    import '../style.css';
     import Fa from 'svelte-fa';
     import { faCircleUser } from '@fortawesome/free-solid-svg-icons';
 </script>

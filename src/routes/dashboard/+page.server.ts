@@ -1,5 +1,5 @@
 import { redirect } from "@sveltejs/kit";
-import { checkUserToken } from "../../(database)/checkUserToken.js";
+import { checkUserToken } from "../(database)/checkUserToken.js";
 
 export async function load({ cookies }) {
     let id: string = cookies.get('userID') || '';
@@ -9,10 +9,3 @@ export async function load({ cookies }) {
         throw redirect(303, '/login')
     }
 }
-
-export const actions = {
-	default: async ({ cookies, request }) => {
-		const data = await request.formData();
-        const userName = data.get('username');
-	},
-};
