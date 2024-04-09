@@ -21,7 +21,7 @@
     </nav>
 
     <div class="user-icon">
-        <a href="/dashboard"><Fa icon={faCircleUser} 
+        <a href="/dashboard/account"><Fa icon={faCircleUser} 
             size="2x" 
             pull="left"
         /></a>

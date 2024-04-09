@@ -9,10 +9,11 @@ export async function registerUser(userName: string, email: string, password: st
 
     const userId = uuidv4();
     const hashPasswd = await bcrypt.hash(password, 5);
+    const date = new Date();
 
     const db = getDB();
     const usersCollection: Collection = await db.collection(USER_COLLECTION);
-    const result = await usersCollection.insertOne({userID: userId, userName: userName, email: email, password: hashPasswd});
+    const result = await usersCollection.insertOne({userID: userId, userName: userName, email: email, password: hashPasswd, creationDate: date});
 
     disconnect();
 
