@@ -29,7 +29,7 @@
             <img src={image} alt="Useravatar" class="userAvatarModal">
             <p>{name}</p>
         </div>
-    {/each}
+        {/each}
     </div>
 </Modal>
 

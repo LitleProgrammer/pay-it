@@ -1,6 +1,7 @@
 import { redirect } from "@sveltejs/kit";
 import { checkUserToken } from "../../(database)/checkUserToken.js";
 import { getUserByID } from "../../(database)/getUserByID.js";
+import {addFriendToUser} from "../../(database)/addFriendToUser"
 import { BSON, EJSON } from "bson";
 
 export async function load({ cookies, params }) {
@@ -19,10 +20,37 @@ export async function load({ cookies, params }) {
 
 
 export const actions = {
-	default: async ({ cookies, request }) => {
+	logout: async ({ cookies, request }) => {
 		const data = await request.formData();
         cookies.delete('userID', { path: '/' });
         cookies.delete('sessionID', { path: '/' });
         throw redirect(302, '/login')
-	}
+	},
+    addFriend: async ({ cookies, request }) => {
+        const data = await request.formData();
+        const userID = cookies.get('userID');
+        const email = data.get('email');
+        switch ((await addFriendToUser(userID, email)).toString()) {
+            case "ok":
+                console.log("ok");
+                break;
+            case "alreadyFriend":
+                //User is already friend with this person
+                console.log("already");
+                break;
+
+            case "noFriend":
+                //Friend does not exists in db
+                console.log("no");
+                break;
+
+            case "cantSelf":
+                //Friend does not exists in db
+                console.log("self");
+                break;
+        
+            default:
+                break;
+        }
+    }
 };

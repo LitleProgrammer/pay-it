@@ -19,7 +19,7 @@
         <p class="label">User since:</p>
         <p>{creationDate.toLocaleDateString()}</p>
         {#if logoutBtn}
-            <form method="post"><button>Logout</button></form>
+            <form method="post" action="?/logout"><button>Logout</button></form>
         {/if}
     </div>
 </div>
