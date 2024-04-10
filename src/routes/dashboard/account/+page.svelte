@@ -83,7 +83,7 @@ const mockRequests = [
 
             <Modal bind:showModal={showRequestModal}>
               <div class="modal">
-                {#each mockFriends as {image, name}, i}
+                {#each data.user.incomingFriends as {image, name}, i}
                 <div class="avatarWrapper">
                     <div class="inlineBtns">
                       <form method="post" action="?/acceptRequest">

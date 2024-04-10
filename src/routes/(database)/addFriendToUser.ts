@@ -17,12 +17,16 @@ export async function addFriendToUser(userID: any, friendEmail: any): Promise<st
                 //User doesn't have this friend
                 usersCollection.updateOne({userID: userID}, {$push:{outgoingFriends: friend.userID}});
                 usersCollection.updateOne({userID: friend.userID}, {$push:{incomingFriends: userID}});
+                disconnect();
                 return "ok";
             }
+            disconnect();
             return "alreadyFriend";
         }
+        disconnect();
         return "cantSelf";
     }
 
+    disconnect();
     return "noFriend";
 }

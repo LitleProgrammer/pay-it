@@ -2,6 +2,8 @@ import { redirect } from "@sveltejs/kit";
 import { checkUserToken } from "../../(database)/checkUserToken.js";
 import { getUserByID } from "../../(database)/getUserByID.js";
 import {addFriendToUser} from "../../(database)/addFriendToUser"
+import { acceptFriend } from "../../(database)/acceptFriend.js";
+import { denyFriend } from "../../(database)/denyFriend.js";
 import { BSON, EJSON } from "bson";
 
 export async function load({ cookies, params }) {
@@ -52,5 +54,19 @@ export const actions = {
             default:
                 break;
         }
+    },
+    acceptRequest: async ({cookies, request}) => {
+        const data = await request.formData();
+        const name = data.get('friendName');
+        const userID = cookies.get('userID');
+
+        acceptFriend(userID, name);
+    },
+    denyRequest: async ({cookies, request}) => {
+        const data = await request.formData();
+        const name = data.get('friendName');  
+        const userID = cookies.get('userID');
+
+        denyFriend(userID, name);
     }
 };
