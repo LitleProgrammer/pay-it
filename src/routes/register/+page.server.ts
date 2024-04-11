@@ -13,14 +13,14 @@ export async function load({ cookies }) {
 }
 
 export const actions = {
-	default: async ({ cookies, request }) => {
-		const data = await request.formData();
+    default: async ({ cookies, request }) => {
+        const data = await request.formData();
         const userName: string = data.get('username')?.toString() || '';
-        const email: string = data.get('email')?.toString() || '';
+        const email: string = data.get('email')?.toString().toLowerCase() || '';
         const passwd: string = data.get('password')?.toString() || '';
 
         if (await registerUser(userName, email, passwd)) {
             throw redirect(303, '/login');
         }
-	},
+    },
 };
