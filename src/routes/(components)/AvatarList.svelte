@@ -1,22 +1,24 @@
 <script lang="ts">
     import "../style.css";
     import Modal from "./Modal.svelte";
+    import avatar from '$lib/images/avatar.png';
 
-    export var images: [];
-
+    export var friends: any[];
     var showModal: boolean;
-
-
 </script>
 
 <button on:click={() => showModal = true}>
     <div class="avatarList">
-        {#each images as {image, name}, i}
+        {#each friends as friend, i}
             {#if i < 8}
-                <img src={image} alt="Useravatar" class="userAvatar" style="--z: {i}"> <!-- using this custome variable to set the z-index to get the stacking look-->
+                {#if friend.picture}
+                    <img src={friend.picture} alt="Useravatar" class="userAvatar" style="--z: {i}"> <!-- using this custome variable to set the z-index to get the stacking look-->
+                {:else}
+                    <img src={avatar} alt="Useravatar" class="userAvatar" style="--z: {i}"> <!-- using this custome variable to set the z-index to get the stacking look-->    
+                {/if}
             {/if}
         {/each}
-        {#if images.length > 8}
+        {#if friends.length > 8}
             <div class="moreAvatars">+</div>
         {/if}
     </div>
@@ -24,11 +26,15 @@
 
 <Modal bind:showModal>
     <div class="modal">
-        {#each images as {image, name}, i}
-        <div class="avatarWrapper">
-            <img src={image} alt="Useravatar" class="userAvatarModal">
-            <p>{name}</p>
-        </div>
+        {#each friends as friend, i}
+            <div class="avatarWrapper">
+                {#if friend.picture}
+                    <img src={friend.picture} alt="Useravatar" class="userAvatarModal">
+                {:else}
+                    <img src={avatar} alt="Useravatar" class="userAvatarModal">
+                {/if}
+                <p>{friend.userName}</p>
+            </div>
         {/each}
     </div>
 </Modal>

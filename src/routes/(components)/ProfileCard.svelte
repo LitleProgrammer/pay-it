@@ -2,22 +2,25 @@
     import avatar from '$lib/images/avatar.png';
     import '../style.css';
 
-    export var name: string;
-    export var email: string;
-    export var creationDate: Date;
+    export var user: {};
+    var date: Date = new Date(user.creationDate);
     export var logoutBtn: boolean;
 
 
 </script>
 
 <div class="wrapper">
-    <img class="profileImage" src={avatar} alt="">
+    {#if user.picture}
+        <img class="profileImage" src={user.picture} alt="">
+    {:else}
+        <img class="profileImage" src={avatar} alt="">
+    {/if}
     <div class="information">
-        <h2>{name}</h2>
+        <h2>{user.userName}</h2>
         <p class="label">E-Mail:</p>
-        <p>{email}</p>
+        <p>{user.email}</p>
         <p class="label">User since:</p>
-        <p>{creationDate.toLocaleDateString()}</p>
+        <p>{date.toLocaleDateString()}</p>
         {#if logoutBtn}
             <form method="post" action="?/logout"><button>Logout</button></form>
         {/if}
@@ -37,6 +40,8 @@
     .profileImage {
         height: 100px;
         margin: -30px;
+        object-fit: cover;
+        border-radius: 50%;
         z-index: 1;
     }
 

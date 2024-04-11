@@ -3,6 +3,7 @@
     import type { PageData } from "../$types";
     import AvatarList from "../../(components)/AvatarList.svelte";
     import Modal from "../../(components)/Modal.svelte";
+    import avatar from '$lib/images/avatar.png';
 
     export let data: PageData;
     let showModal: boolean;
@@ -63,16 +64,16 @@ const mockRequests = [
 <div class="wrapper">
     <div class="grid">
         <div class="cardWrapper">
-            <ProfileCard name={data.user.userName} email={data.user.email} creationDate={new Date(data.user.creationDate)} logoutBtn={true}/>
+            <ProfileCard user={data.user} name={data.user.userName} email={data.user.email} creationDate={new Date(data.user.creationDate)} logoutBtn={true}/>
         </div>
         <div class="settingsWrapper">
             <h2>Friends:</h2>
-            <AvatarList images={mockFriends}/>
+            <AvatarList friends={data.friends}/>
 
             <Modal bind:showModal>
               <form method="post" action="?/addFriend">
                 <input type="email" name="email" id="email" placeholder="E-Mail" required><br>
-                <button type="submit">Add Friend</button>
+                <button>Add Friend</button>
               </form>
             </Modal>
             <button on:click={() => showModal = true}>Add Friend</button>
@@ -83,20 +84,24 @@ const mockRequests = [
 
             <Modal bind:showModal={showRequestModal}>
               <div class="modal">
-                {#each data.user.incomingFriends as {image, name}, i}
+                {#each data.incomingFriends as friend, i}
                 <div class="avatarWrapper">
                     <div class="inlineBtns">
                       <form method="post" action="?/acceptRequest">
-                        <input type="hidden" name="friendName" id="friendName" value={name}>
+                        <input type="hidden" name="friendName" id="friendName" value={friend.userName}>
                         <button type="submit" class="friendRequestActionBtn tick"><svg height="169px" viewBox="0 0 24.00 24.00" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M4.89163 13.2687L9.16582 17.5427L18.7085 8" stroke="#000000" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg></button>
                       </form>
                       <form method="post" action="?/denyRequest">
-                        <input type="hidden" name="friendName" id="friendName" value={name}>
+                        <input type="hidden" name="friendName" id="friendName" value={friend.userName}>
                         <button type="submit" class="friendRequestActionBtn cross"><svg height="256px" viewBox="0 0 24.00 24.00" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#000000" stroke-width="0.00024000000000000003"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round" stroke="#CCCCCC" stroke-width="0.048"></g><g id="SVGRepo_iconCarrier"> <path fill-rule="evenodd" clip-rule="evenodd" d="M16.9498 8.46447C17.3404 8.07394 17.3404 7.44078 16.9498 7.05025C16.5593 6.65973 15.9261 6.65973 15.5356 7.05025L12.0001 10.5858L8.46455 7.05025C8.07402 6.65973 7.44086 6.65973 7.05033 7.05025C6.65981 7.44078 6.65981 8.07394 7.05033 8.46447L10.5859 12L7.05033 15.5355C6.65981 15.9261 6.65981 16.5592 7.05033 16.9497C7.44086 17.3403 8.07402 17.3403 8.46455 16.9497L12.0001 13.4142L15.5356 16.9497C15.9261 17.3403 16.5593 17.3403 16.9498 16.9497C17.3404 16.5592 17.3404 15.9261 16.9498 15.5355L13.4143 12L16.9498 8.46447Z" fill="#000000"></path> </g></svg></button>
                       </form>
                     </div>
-                    <img src={image} alt="Useravatar" class="userAvatarModal">
-                    <p>{name}</p>
+                    {#if friend.picture}
+                      <img src={friend.picture} alt="Useravatar" class="userAvatarModal"> <!-- using this custome variable to set the z-index to get the stacking look-->
+                    {:else}
+                      <img src={avatar} alt="Useravatar" class="userAvatarModal"> <!-- using this custome variable to set the z-index to get the stacking look-->    
+                     {/if}
+                    <p>{friend.userName}</p>
                 </div>
                 {/each}
               </div>

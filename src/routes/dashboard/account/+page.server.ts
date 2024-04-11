@@ -5,6 +5,7 @@ import {addFriendToUser} from "../../(database)/addFriendToUser"
 import { acceptFriend } from "../../(database)/acceptFriend.js";
 import { denyFriend } from "../../(database)/denyFriend.js";
 import { BSON, EJSON } from "bson";
+import { disconnect } from "../../(database)/mongodb.js";
 
 export async function load({ cookies, params }) {
     let id: string = cookies.get('userID') || '';
@@ -16,8 +17,23 @@ export async function load({ cookies, params }) {
 
     const result = await getUserByID(id);
     const json = EJSON.deserialize(result);
+
+    var friends = await loadUsers(json.friends);
+    var incomingFriends = await loadUsers(json.incomingFriends);
     
-    return {user: json};
+    return {user: json, friends: friends, incomingFriends: incomingFriends};
+}
+
+
+async function loadUsers(friends: []): Promise<any[]> {
+    if (friends) {
+        const friendDocsPromises = friends.map(async (friend) => {
+            return EJSON.deserialize(await getUserByID(friend));
+        });
+        const friendDocs = await Promise.all(friendDocsPromises);
+        return friendDocs;
+    }
+    return [];
 }
 
 

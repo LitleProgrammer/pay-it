@@ -6,7 +6,7 @@ import { USER_COLLECTION } from '$env/static/private';
 export async function addFriendToUser(userID: any, friendEmail: any): Promise<string> {
     connect();
 
-    const db = getDB();
+    const db = await getDB();
     const usersCollection = await db.collection(USER_COLLECTION);
     const friend = await usersCollection.findOne({email: friendEmail});
     if (friend) {
@@ -15,18 +15,18 @@ export async function addFriendToUser(userID: any, friendEmail: any): Promise<st
             const result = await usersCollection.findOne({userID: userID, friends: friend.userID});
             if(!result) {
                 //User doesn't have this friend
-                usersCollection.updateOne({userID: userID}, {$push:{outgoingFriends: friend.userID}});
-                usersCollection.updateOne({userID: friend.userID}, {$push:{incomingFriends: userID}});
-                disconnect();
+                await usersCollection.updateOne({userID: userID}, {$push:{outgoingFriends: friend.userID}});
+                await usersCollection.updateOne({userID: friend.userID}, {$push:{incomingFriends: userID}});
+                await disconnect();
                 return "ok";
             }
-            disconnect();
+            await disconnect();
             return "alreadyFriend";
         }
-        disconnect();
+        await disconnect();
         return "cantSelf";
     }
 
-    disconnect();
+    await disconnect();
     return "noFriend";
 }
