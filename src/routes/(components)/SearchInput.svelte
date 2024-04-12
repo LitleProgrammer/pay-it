@@ -1,27 +1,29 @@
 <script lang="ts">
-
     export var data: string[];
     export var placeholder: string;
     export let setValue: (selected: string) => void;
 
     var input: HTMLInputElement;
     var isFocussed: boolean = true;
-    var inputValue = '';
+    var inputValue = "";
 
     var suggestions: string[] = [];
 
     const inputChange = () => {
+        setValue(inputValue);
         suggestions = [];
         if (inputValue) {
-            data.forEach(date => {
-                if (date.toLocaleLowerCase().startsWith(inputValue.toLowerCase())) {
+            data.forEach((date) => {
+                if (
+                    date
+                        .toLocaleLowerCase()
+                        .startsWith(inputValue.toLowerCase())
+                ) {
                     suggestions = [...suggestions, date];
                 }
             });
         }
-    }
-
-
+    };
 
     const setInputValue = (selected: string) => {
         inputValue = selected;
@@ -33,7 +35,7 @@
             isFocussed = true;
             input.focus();
         }
-    }
+    };
 
     const focusChange = () => {
         if (isFocussed) {
@@ -43,23 +45,37 @@
             isFocussed = true;
             input.focus();
         }
-    }
+    };
 
     const handleBlur = () => {
         setTimeout(() => {
             isFocussed = false;
         }, 100);
-    }
+    };
 </script>
 
 <slot />
 
-<input type="text" name="" id="" placeholder="{placeholder}" bind:value={inputValue} on:keyup={inputChange} bind:this={input} on:focus={() => isFocussed = true} on:blur={handleBlur}>
+<input
+    type="text"
+    name=""
+    id=""
+    {placeholder}
+    bind:value={inputValue}
+    bind:this={input}
+    on:keyup={inputChange}
+    on:focus={() => (isFocussed = true)}
+    on:blur={handleBlur}
+/>
 
 {#if suggestions.length > 0 && isFocussed}
     <ul>
         {#each suggestions as suggestion}
-            <li class="suggesion"><button type="button" on:click={() => setInputValue(suggestion)} >{suggestion}</button></li>
+            <li class="suggesion">
+                <button type="button" on:click={() => setInputValue(suggestion)}
+                    >{suggestion}</button
+                >
+            </li>
         {/each}
     </ul>
 {/if}

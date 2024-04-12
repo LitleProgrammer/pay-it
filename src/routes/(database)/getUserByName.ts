@@ -1,8 +1,8 @@
-import {connect, disconnect, getDB} from "./mongodb";
+import { connect, disconnect, getDB } from "./mongodb";
 import { USER_COLLECTION } from '$env/static/private';
 import type { Collection, WithId } from "mongodb";
 
-export async function getUserByName(name: string): Promise<WithId<Document> | null> {
+export async function getUserByName(name: any): Promise<WithId<Document> | null> {
     connect();
 
     const db = getDB();
@@ -10,6 +10,6 @@ export async function getUserByName(name: string): Promise<WithId<Document> | nu
 
     const result: Promise<WithId<Document> | null> = await usersCollection.findOne({ userName: name });
 
-    disconnect();
+    await disconnect();
     return result;
 }

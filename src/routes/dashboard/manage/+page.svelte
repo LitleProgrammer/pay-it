@@ -1,63 +1,41 @@
-<script>
-    import Table from '../../(components)/ManageTable.svelte';
-    import '../../style.css';
-    import Fa from 'svelte-fa';
-    import { faPlus } from '@fortawesome/free-solid-svg-icons';
-    import Modal from '../../(components)/Modal.svelte';
-    import SearchInput from '../../(components)/SearchInput.svelte';
-    import NewDebtForm from '../../(components)/NewDebtForm.svelte';
+<script lang="ts">
+    import Table from "../../(components)/ManageTable.svelte";
+    import "../../style.css";
+    import Fa from "svelte-fa";
+    import type { PageData } from "../$types";
+    import { faPlus } from "@fortawesome/free-solid-svg-icons";
+    import Modal from "../../(components)/Modal.svelte";
+    import SearchInput from "../../(components)/SearchInput.svelte";
+    import NewDebtForm from "../../(components)/NewDebtForm.svelte";
 
-    const listData = {
+    export let data: PageData;
+
+    const debtList = {
         cols: ["Debtor", "", "Creditor", "Sum", "Reason"],
-        data: [
-            {name: "Bill", sum: -79, reason: "https://link.de", direction: "<"},
-            {name: "Alice", sum: 39, reason: "https://link.de", direction: ">"},
-            {name: "David", sum: 18, reason: "https://link.de", direction: ">"},
-            {name: "Grace", sum: 0, reason: "https://link.de", direction: ">"},
-            {name: "Eve", sum: -64, reason: "https://link.de", direction: "<"},
-            {name: "Charlie", sum: 88, reason: "https://link.de", direction: ">"},
-            {name: "Jerome", sum: 97, reason: "https://link.de", direction: ">"},
-            {name: "Bob", sum: -25, reason: "https://link.de", direction: "<"},
-            {name: "Bill", sum: -79, reason: "https://link.de", direction: "<"},
-            {name: "Alice", sum: 39, reason: "https://link.de", direction: ">"},
-            {name: "David", sum: 18, reason: "https://link.de", direction: ">"},
-            {name: "Grace", sum: 0, reason: "https://link.de", direction: ">"},
-            {name: "Eve", sum: -64, reason: "https://link.de", direction: "<"},
-            {name: "Charlie", sum: 88, reason: "https://link.de", direction: ">"},
-            {name: "Jerome", sum: 97, reason: "https://link.de", direction: ">"},
-            {name: "Bob", sum: -25, reason: "https://link.de", direction: "<"},
-            {name: "Bill", sum: -79, reason: "https://link.de", direction: "<"},
-            {name: "Alice", sum: 39, reason: "https://link.de", direction: ">"},
-            {name: "David", sum: 18, reason: "https://link.de", direction: ">"},
-            {name: "Grace", sum: 0, reason: "https://link.de", direction: ">"},
-            {name: "Eve", sum: -64, reason: "https://link.de", direction: "<"},
-            {name: "Charlie", sum: 88, reason: "https://link.de", direction: ">"},
-            {name: "Jerome", sum: 97, reason: "https://link.de", direction: ">"},
-            {name: "Bob", sum: -25, reason: "https://link.de", direction: "<"}
-        ]
-    }
+        data: data.debts,
+    };
 
     let showModal = false;
 </script>
 
 <div class="manage">
-    <div class="infoBlock wrapper">
-        
-    </div>
-    
+    <div class="infoBlock wrapper"></div>
+
     <div class="sidebar wrapper">
         <div class="buttonWrapper">
-            <button on:click={() => (showModal = true)}><Fa icon={faPlus}  size="6x" /></button>
+            <button on:click={() => (showModal = true)}
+                ><Fa icon={faPlus} size="6x" /></button
+            >
             <div class="modalWrapper">
                 <Modal bind:showModal>
-                    <NewDebtForm />
+                    <NewDebtForm friendNames={data.friends} />
                 </Modal>
             </div>
         </div>
     </div>
-    
+
     <div class="openList wrapper">
-        <Table data={listData}/>
+        <Table data={debtList} />
     </div>
 </div>
 
@@ -126,5 +104,4 @@
         height: 100%;
         width: 100%;
     }
-
 </style>
