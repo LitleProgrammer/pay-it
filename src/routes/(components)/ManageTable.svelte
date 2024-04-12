@@ -1,7 +1,10 @@
 <script lang="ts">
     import "../style.css";
     import Fa from "svelte-fa";
-    import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
+    import {
+        faArrowRight,
+        faTrashCan,
+    } from "@fortawesome/free-solid-svg-icons";
 
     export var data = { cols: [""], data: [] };
 </script>
@@ -13,7 +16,7 @@
                 <th>{heading}</th>
             {/each}
         </tr>
-        {#each data.data as { name, sum, reason, direction }}
+        {#each data.data as { name, sum, reason, direction, id }}
             {#if direction == "<"}
                 <tr class="tr-red">
                     <td>You</td>
@@ -21,6 +24,14 @@
                     <td>{name}</td>
                     <td>{sum}€</td>
                     <td>{reason}</td>
+                    <td>
+                        <form method="post" action="?/removeDebt">
+                            <input type="hidden" name="debtID" value={id} />
+                            <button type="submit"
+                                ><Fa icon={faTrashCan} size="1.7x" /></button
+                            >
+                        </form>
+                    </td>
                 </tr>
             {:else if direction == ">"}
                 <tr class="tr-green">
@@ -29,6 +40,14 @@
                     <td>You</td>
                     <td>{sum}€</td>
                     <td>{reason}</td>
+                    <td>
+                        <form method="post" action="?/removeDebt">
+                            <input type="hidden" name="debtID" value={id} />
+                            <button type="submit"
+                                ><Fa icon={faTrashCan} size="1.7x" /></button
+                            >
+                        </form>
+                    </td>
                 </tr>
             {/if}
         {/each}
@@ -74,5 +93,21 @@
         padding-top: 5px;
         padding-bottom: 5px;
         border-bottom: 3px solid var(--color-bg-2);
+    }
+
+    th {
+        text-align: left;
+    }
+
+    button {
+        background-color: rgb(0, 0, 0, 0);
+        border: none;
+        color: var(--color-text);
+        transition: scale, 0.3s;
+    }
+
+    button:hover {
+        cursor: pointer;
+        scale: 1.2;
     }
 </style>

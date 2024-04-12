@@ -3,8 +3,9 @@ import { checkUserToken } from "../../(database)/checkUserToken.js";
 import { EJSON } from "bson";
 import { getUserByID } from "../../(database)/getUserByID.js";
 import { getUserByName } from "../../(database)/getUserByName.js";
-import { addDebts } from "../../(database)/addDebt.js";
+import { addDebt } from "../../(database)/addDebt.js";
 import { getDebtByID } from "../../(database)/getDebtByID.js";
+import { removeDebt } from "../../(database)/removeDebt.js";
 
 export async function load({ cookies }) {
     let id: string = cookies.get('userID') || '';
@@ -38,35 +39,48 @@ async function generateDebtList(debts: [], userID: any): Promise<any[]> {
     if (debts) {
         const debtsDocsPromises = debts.map(async (debt) => {
             const debtDoc = EJSON.deserialize(await getDebtByID(debt));
-            if (debtDoc.debtorID) {
-                if (!debtDoc.creditorID) {
-                    return { name: debtDoc.creditorName, sum: debtDoc.debt, reason: debtDoc.reason, direction: "<" };
-                }
+            if (debtDoc) {
+                if (debtDoc.debtorID) {
+                    if (!debtDoc.creditorID) {
+                        return { name: debtDoc.creditorName, sum: debtDoc.debt, reason: debtDoc.reason, direction: "<", id: debt };
+                    }
 
-                if (debtDoc.debtorID !== userID) {
-                    return { name: debtDoc.debtorName, sum: debtDoc.debt, reason: debtDoc.reason, direction: ">" };
+                    if (debtDoc.debtorID !== userID) {
+                        return { name: debtDoc.debtorName, sum: debtDoc.debt, reason: debtDoc.reason, direction: ">", id: debt };
+                    } else {
+                        return { name: debtDoc.creditorName, sum: debtDoc.debt, reason: debtDoc.reason, direction: "<", id: debt };
+                    }
                 } else {
-                    return { name: debtDoc.creditorName, sum: debtDoc.debt, reason: debtDoc.reason, direction: "<" };
+                    return { name: debtDoc.debtorName, sum: debtDoc.debt, reason: debtDoc.reason, direction: ">", id: debt };
                 }
             } else {
-                return { name: debtDoc.debtorName, sum: debtDoc.debt, reason: debtDoc.reason, direction: ">" };
+                return null;
             }
         });
-        const debtDocs = await Promise.all(debtsDocsPromises);
+
+        const debtDocs = ((await Promise.all(debtsDocsPromises)).filter(doc => doc !== null));
         return debtDocs;
     }
     return [];
 }
 
 export const actions = {
-    default: async ({ cookies, request }) => {
+    addDebt: async ({ cookies, request }) => {
         const data = await request.formData();
         const friendName = data.get('username');
         const debt = data.get('debt');
         const reason = data.get('reason');
         const id = cookies.get('userID');
 
-        await addDebts(id, friendName, debt, reason);
+        await addDebt(id, friendName, debt, reason);
+        redirect(303, '/dashboard/manage');
+    },
+    removeDebt: async ({ cookies, request }) => {
+        const data = await request.formData();
+        const debtID = data.get('debtID');
+        const id = cookies.get('userID');
 
+        await removeDebt(id, debtID);
+        redirect(303, '/dashboard/manage');
     },
 };

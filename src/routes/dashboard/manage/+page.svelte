@@ -11,7 +11,7 @@
     export let data: PageData;
 
     const debtList = {
-        cols: ["Debtor", "", "Creditor", "Sum", "Reason"],
+        cols: ["Debtor", "", "Creditor", "Sum", "Reason", ""],
         data: data.debts,
     };
 

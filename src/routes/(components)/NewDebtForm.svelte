@@ -10,7 +10,7 @@
     };
 </script>
 
-<form method="POST">
+<form action="?/addDebt" method="POST">
     <h1>Add a new debt</h1>
 
     <input required type="hidden" name="username" bind:value={username} />
