@@ -21,12 +21,12 @@
 
 <style>
 	dialog {
-        width: 50%;
+		width: 50%;
 		border-radius: 0.2em;
 		border: none;
 		padding: 0;
-        background-color: var(--color-bg-1);
-        border-radius: 30px;
+		background-color: var(--color-bg-1);
+		border-radius: 30px;
 	}
 	dialog::backdrop {
 		background: rgba(0, 0, 0, 0.3);
@@ -54,6 +54,22 @@
 		}
 		to {
 			opacity: 1;
+		}
+	}
+
+	@media screen and (max-width: 991px) {
+		/* start of large tablet styles */
+	}
+
+	@media screen and (max-width: 767px) {
+		/* start of medium tablet styles */
+	}
+
+	@media screen and (max-width: 479px) {
+		/* start of phone styles */
+		dialog {
+			width: 100%;
+			padding: 5%;
 		}
 	}
 </style>

@@ -128,4 +128,19 @@
     li:hover {
         cursor: pointer;
     }
+
+    @media screen and (max-width: 991px) {
+        /* start of large tablet styles */
+    }
+
+    @media screen and (max-width: 767px) {
+        /* start of medium tablet styles */
+    }
+
+    @media screen and (max-width: 479px) {
+        /* start of phone styles */
+        ul {
+            padding-right: 6%;
+        }
+    }
 </style>

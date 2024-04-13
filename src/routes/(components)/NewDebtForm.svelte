@@ -38,6 +38,10 @@
 </form>
 
 <style>
+    h1 {
+        color: var(--color-text);
+    }
+
     input {
         width: 100%;
         padding-top: 1%;
@@ -66,5 +70,21 @@
         background-color: var(--color-bg-2);
         cursor: pointer;
         scale: 1.07;
+    }
+
+    @media screen and (max-width: 991px) {
+        /* start of large tablet styles */
+    }
+
+    @media screen and (max-width: 767px) {
+        /* start of medium tablet styles */
+    }
+
+    @media screen and (max-width: 479px) {
+        /* start of phone styles */
+
+        input {
+            margin: 0;
+        }
     }
 </style>

@@ -42,16 +42,16 @@ async function generateDebtList(debts: [], userID: any): Promise<any[]> {
             if (debtDoc) {
                 if (debtDoc.debtorID) {
                     if (!debtDoc.creditorID) {
-                        return { name: debtDoc.creditorName, sum: debtDoc.debt, reason: debtDoc.reason, direction: "<", id: debt };
+                        return { name: debtDoc.creditorName, sum: debtDoc.debt, reason: debtDoc.reason, direction: "<", id: debt, canRemove: true };
                     }
 
                     if (debtDoc.debtorID !== userID) {
-                        return { name: debtDoc.debtorName, sum: debtDoc.debt, reason: debtDoc.reason, direction: ">", id: debt };
+                        return { name: debtDoc.debtorName, sum: debtDoc.debt, reason: debtDoc.reason, direction: ">", id: debt, canRemove: debtDoc.creatorID === userID };
                     } else {
-                        return { name: debtDoc.creditorName, sum: debtDoc.debt, reason: debtDoc.reason, direction: "<", id: debt };
+                        return { name: debtDoc.creditorName, sum: debtDoc.debt, reason: debtDoc.reason, direction: "<", id: debt, canRemove: debtDoc.creatorID === userID };
                     }
                 } else {
-                    return { name: debtDoc.debtorName, sum: debtDoc.debt, reason: debtDoc.reason, direction: ">", id: debt };
+                    return { name: debtDoc.debtorName, sum: debtDoc.debt, reason: debtDoc.reason, direction: ">", id: debt, canRemove: true };
                 }
             } else {
                 return null;
@@ -59,6 +59,8 @@ async function generateDebtList(debts: [], userID: any): Promise<any[]> {
         });
 
         const debtDocs = ((await Promise.all(debtsDocsPromises)).filter(doc => doc !== null));
+        console.log(debtDocs);
+
         return debtDocs;
     }
     return [];

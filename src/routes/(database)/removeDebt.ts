@@ -12,14 +12,16 @@ export async function removeDebt(userID: any, debtID: any): Promise<string> {
     const user = await usersCollection.findOne({ userID: userID });
 
     if (debt) {
-        if (debt.debtorID) {
-            usersCollection.updateOne({ userID: debt.debtorID }, { $pull: { debts: debtID } });
-        }
+        if (debt.creatorID === userID) {
+            if (debt.debtorID) {
+                usersCollection.updateOne({ userID: debt.debtorID }, { $pull: { debts: debtID } });
+            }
 
-        if (debt.creditorID) {
-            usersCollection.updateOne({ userID: debt.creditorID }, { $pull: { debts: debtID } });
+            if (debt.creditorID) {
+                usersCollection.updateOne({ userID: debt.creditorID }, { $pull: { debts: debtID } });
+            }
+            debtsCollection.deleteOne({ debtID: debtID });
         }
-        debtsCollection.deleteOne({ debtID: debtID });
     }
     return "";
 }

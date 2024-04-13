@@ -1,19 +1,17 @@
 <script lang="ts">
-    import avatar from '$lib/images/avatar.png';
-    import '../style.css';
+    import avatar from "$lib/images/avatar.png";
+    import "../style.css";
 
     export var user: {};
     var date: Date = new Date(user.creationDate);
     export var logoutBtn: boolean;
-
-
 </script>
 
 <div class="wrapper">
     {#if user.picture}
-        <img class="profileImage" src={user.picture} alt="">
+        <img class="profileImage" src={user.picture} alt="" />
     {:else}
-        <img class="profileImage" src={avatar} alt="">
+        <img class="profileImage" src={avatar} alt="" />
     {/if}
     <div class="information">
         <h2>{user.userName}</h2>
@@ -29,7 +27,7 @@
 
 <style>
     .wrapper {
-        height: 100%;
+        height: auto;
         width: 100%;
         display: flex;
         align-items: center;
@@ -87,5 +85,21 @@
         background-color: var(--color-bg-2);
         cursor: pointer;
         scale: 1.07;
+    }
+
+    @media screen and (max-width: 991px) {
+        /* start of large tablet styles */
+    }
+
+    @media screen and (max-width: 767px) {
+        /* start of medium tablet styles */
+    }
+
+    @media screen and (max-width: 479px) {
+        /* start of phone styles */
+        .information {
+            height: auto;
+            width: auto;
+        }
     }
 </style>

@@ -16,7 +16,7 @@
                 <th>{heading}</th>
             {/each}
         </tr>
-        {#each data.data as { name, sum, reason, direction, id }}
+        {#each data.data as { name, sum, reason, direction, id, canRemove }}
             {#if direction == "<"}
                 <tr class="tr-red">
                     <td>You</td>
@@ -25,12 +25,17 @@
                     <td>{sum}€</td>
                     <td>{reason}</td>
                     <td>
-                        <form method="post" action="?/removeDebt">
-                            <input type="hidden" name="debtID" value={id} />
-                            <button type="submit"
-                                ><Fa icon={faTrashCan} size="1.7x" /></button
-                            >
-                        </form>
+                        {#if canRemove}
+                            <form method="post" action="?/removeDebt">
+                                <input type="hidden" name="debtID" value={id} />
+                                <button type="submit"
+                                    ><Fa
+                                        icon={faTrashCan}
+                                        size="1.7x"
+                                    /></button
+                                >
+                            </form>
+                        {/if}
                     </td>
                 </tr>
             {:else if direction == ">"}
@@ -41,12 +46,17 @@
                     <td>{sum}€</td>
                     <td>{reason}</td>
                     <td>
-                        <form method="post" action="?/removeDebt">
-                            <input type="hidden" name="debtID" value={id} />
-                            <button type="submit"
-                                ><Fa icon={faTrashCan} size="1.7x" /></button
-                            >
-                        </form>
+                        {#if canRemove}
+                            <form method="post" action="?/removeDebt">
+                                <input type="hidden" name="debtID" value={id} />
+                                <button type="submit"
+                                    ><Fa
+                                        icon={faTrashCan}
+                                        size="1.7x"
+                                    /></button
+                                >
+                            </form>
+                        {/if}
                     </td>
                 </tr>
             {/if}
@@ -64,6 +74,7 @@
         border-radius: 30px;
         height: 95%;
         overflow-y: scroll;
+        overflow-x: hidden;
     }
 
     table {
@@ -109,5 +120,20 @@
     button:hover {
         cursor: pointer;
         scale: 1.2;
+    }
+
+    @media screen and (max-width: 991px) {
+        /* start of large tablet styles */
+    }
+
+    @media screen and (max-width: 767px) {
+        /* start of medium tablet styles */
+    }
+
+    @media screen and (max-width: 479px) {
+        /* start of phone styles */
+        table {
+            font-size: 0.74em;
+        }
     }
 </style>

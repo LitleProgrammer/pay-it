@@ -1,7 +1,7 @@
 <script lang="ts">
-    import type { LayoutData } from './$types';
+    import type { LayoutData } from "./$types";
     import Header from "../(components)/Header.svelte";
-    import '../style.css';
+    import "../style.css";
 </script>
 
 <div class="dashboard">
@@ -12,20 +12,19 @@
 </div>
 
 <style>
-	.dashboard {
-		display: flex;
-		flex-direction: column;
-        height: 100vh;
-        width: 100vw;
-        overflow: hidden;
+    .dashboard {
+        display: flex;
+        flex-direction: column;
+        min-height: 100dvh;
+        width: 100dvw;
         background-color: var(--color-bg-1);
-	}
+    }
 
-	main {
-		display: flex;
+    main {
+        display: flex;
         justify-content: center;
-		padding-top: 1rem;
-		margin: 0;
+        padding-top: 1rem;
+        margin: 0;
         height: 100%;
-	}
+    }
 </style>

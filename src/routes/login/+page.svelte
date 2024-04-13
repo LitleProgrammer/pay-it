@@ -1,13 +1,14 @@
 <script>
-    import '../style.css';
+    import "../style.css";
 </script>
 
 <div class="wrapper">
     <div class="form-wrapper">
         <h1>Welcome back 👋</h1>
         <form method="POST">
-            <input type="text" name="username" placeholder="Username"><br>
-            <input type="password" name="password" placeholder="Password"><br>
+            <input type="text" name="username" placeholder="Username" /><br />
+            <input type="password" name="password" placeholder="Password" /><br
+            />
             <button>Login</button>
         </form>
         <p>Want to make an account? Go to <a href="/register">Register</a></p>
@@ -16,13 +17,17 @@
 
 <style>
     .wrapper {
-        height: 100vh;
-        width: 100vw;
+        height: 100dvh;
+        width: 100dvw;
         display: flex;
         align-items: center;
         justify-content: center;
-        background: rgb(42,46,46);
-        background: linear-gradient(25deg, rgba(42,46,46,1) 25%, rgba(4,4,4,1) 100%);
+        background: rgb(42, 46, 46);
+        background: linear-gradient(
+            25deg,
+            rgba(42, 46, 46, 1) 25%,
+            rgba(4, 4, 4, 1) 100%
+        );
         overflow: hidden;
     }
 
@@ -37,7 +42,6 @@
     }
 
     input {
-        width: 100%;
         padding-top: 1%;
         padding-bottom: 1%;
         font-size: 1.2em;

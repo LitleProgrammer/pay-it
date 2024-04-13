@@ -19,13 +19,9 @@
 </script>
 
 <div class="manage">
-    <div class="infoBlock wrapper"></div>
-
     <div class="sidebar wrapper">
         <div class="buttonWrapper">
-            <button on:click={() => (showModal = true)}
-                ><Fa icon={faPlus} size="6x" /></button
-            >
+            <button on:click={() => (showModal = true)}>Add debt</button>
             <div class="modalWrapper">
                 <Modal bind:showModal>
                     <NewDebtForm friendNames={data.friends} />
@@ -82,26 +78,76 @@
         text-align: center;
     }
 
-    .sidebar button {
-        border-radius: 40px;
-        border: none;
-        width: 40%;
-        background-color: var(--color-bg-0);
-        transition: 0.2s linear;
+    button {
+        width: 50%;
+        padding-top: 1%;
+        padding-bottom: 1%;
+        font-size: 1.2em;
+        border: 2px solid var(--color-bg-0);
+        border-radius: 30px;
+        background-color: var(--color-bg-1);
         color: var(--color-text);
+        transition: scale 0.3s;
     }
 
-    .sidebar button:hover {
+    button:hover {
+        background-color: var(--color-bg-2);
         cursor: pointer;
-        background-color: var(--hover);
+        scale: 1.07;
     }
 
     .openList {
-        grid-row-start: 2;
+        grid-row-start: 1;
         grid-row-end: 4;
         grid-column-start: 1;
         grid-column-end: 2;
         height: 100%;
         width: 100%;
+    }
+
+    @media screen and (max-width: 991px) {
+        /* start of large tablet styles */
+    }
+
+    @media screen and (max-width: 767px) {
+        /* start of medium tablet styles */
+    }
+
+    @media screen and (max-width: 479px) {
+        /* start of phone styles */
+        .manage {
+            display: grid;
+            grid-template-columns: 100%;
+            grid-template-rows: 1fr;
+            width: 95vw;
+            height: 90%;
+            column-gap: 1%;
+            row-gap: 2.5%;
+            padding: 1%;
+        }
+
+        .sidebar {
+            grid-row-start: 2;
+            grid-row-end: 3;
+            grid-column-start: 1;
+            grid-column-end: 2;
+            height: 100%;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+        }
+
+        .openList {
+            grid-row-start: 1;
+            grid-row-end: 2;
+            grid-column-start: 1;
+            grid-column-end: 2;
+            height: 100%;
+            width: 100%;
+        }
+        .buttonWrapper {
+            padding-top: 5%;
+            padding-bottom: 5%;
+        }
     }
 </style>
