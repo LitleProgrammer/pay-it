@@ -13,12 +13,7 @@
 <div class="wrapper">
   <div class="grid">
     <div class="cardWrapper">
-      <ProfileCard
-        user={data.user}
-        email={data.user.email}
-        creationDate={new Date(data.user.creationDate)}
-        logoutBtn={true}
-      />
+      <ProfileCard user={data.user} logoutBtn={true} />
     </div>
     <div class="wrappidy">
       <div class="settingsWrapper">

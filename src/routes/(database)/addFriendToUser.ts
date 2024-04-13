@@ -11,7 +11,7 @@ export async function addFriendToUser(userID: any, friendEmail: any): Promise<st
     const friend = await usersCollection.findOne({ email: friendEmail.toLowerCase() });
 
     if (friend) {
-        if (!friend.userID !== userID) {
+        if (friend.userID !== userID) {
             //Checks if it was already requested
             if (friend.incomingFriends) {
                 if (friend.incomingFriends.includes(userID)) {

@@ -21,6 +21,8 @@ export const actions = {
 
         if (await registerUser(userName, email, passwd)) {
             throw redirect(303, '/login');
+        } else {
+            //Send error message
         }
     },
 };

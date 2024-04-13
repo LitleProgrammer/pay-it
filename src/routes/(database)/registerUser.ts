@@ -1,4 +1,4 @@
-import {connect, disconnect, getDB} from "./mongodb";
+import { connect, disconnect, getDB } from "./mongodb";
 import { USER_COLLECTION } from '$env/static/private';
 import type { Collection } from "mongodb";
 import { v4 as uuidv4 } from 'uuid';
@@ -13,9 +13,19 @@ export async function registerUser(userName: string, email: string, password: st
 
     const db = getDB();
     const usersCollection: Collection = await db.collection(USER_COLLECTION);
-    const result = await usersCollection.insertOne({userID: userId, userName: userName, email: email, password: hashPasswd, creationDate: date});
+    const nameResult = await usersCollection.findOne({ userName: userName });
+    const emailResult = await usersCollection.findOne({ email: email.toLowerCase() });
 
-    disconnect();
+    if (nameResult) {
+        return false;
+    }
 
+    if (emailResult) {
+        return false;
+    }
+
+    const result = await usersCollection.insertOne({ userID: userId, userName: userName, email: email.toLowerCase(), password: hashPasswd, creationDate: date });
+
+    await disconnect();
     return true;
 }
