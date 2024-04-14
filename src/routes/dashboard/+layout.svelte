@@ -2,6 +2,7 @@
     import type { LayoutData } from "./$types";
     import Header from "../(components)/Header.svelte";
     import "../style.css";
+    import Footer from "../(components)/Footer.svelte";
 </script>
 
 <div class="dashboard">
@@ -9,6 +10,9 @@
     <main>
         <slot />
     </main>
+    <div class="footerWrapper">
+        <Footer />
+    </div>
 </div>
 
 <style>
@@ -26,5 +30,10 @@
         padding-top: 1rem;
         margin: 0;
         height: 100%;
+    }
+
+    .footerWrapper {
+        position: fixed;
+        bottom: 0;
     }
 </style>

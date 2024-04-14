@@ -1,4 +1,4 @@
-import { redirect } from "@sveltejs/kit";
+import { fail, redirect } from "@sveltejs/kit";
 import { checkUserToken } from "../(database)/checkUserToken.js";
 import { loginUser } from "../(database)/loginUser.js";
 
@@ -12,8 +12,8 @@ export async function load({ cookies }) {
 }
 
 export const actions = {
-	default: async ({ cookies, request }) => {
-		const data = await request.formData();
+    default: async ({ cookies, request }) => {
+        const data = await request.formData();
         const userName: string = data.get('username')?.toString() || '';
         const passwd: string = data.get('password')?.toString() || '';
 
@@ -21,12 +21,12 @@ export const actions = {
         if (result.text == "ok") {
             throw redirect(303, '/dashboard');
         } else if (result.text == "wrong password") {
-            return;
+            return fail(400, { problem: true });
         } else if (result.text == "couldn't find user") {
-            return;
+            return fail(400, { problem: true });
         } else {
-            return;
+            return fail(400, { otherError: true });
         }
 
-	},
+    },
 };

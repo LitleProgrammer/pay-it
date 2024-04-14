@@ -1,4 +1,4 @@
-import { redirect } from "@sveltejs/kit";
+import { fail, redirect } from "@sveltejs/kit";
 import { checkUserToken } from "../(database)/checkUserToken.js";
 import { registerUser } from "../(database)/registerUser.js";
 import { goto } from "$app/navigation";
@@ -19,10 +19,18 @@ export const actions = {
         const email: string = data.get('email')?.toString().toLowerCase() || '';
         const passwd: string = data.get('password')?.toString() || '';
 
-        if (await registerUser(userName, email, passwd)) {
-            throw redirect(303, '/login');
-        } else {
-            //Send error message
+        switch (await registerUser(userName, email, passwd)) {
+            case "ok":
+                redirect(303, "/login")
+                break;
+            case "nameExists":
+                return fail(400, { nameExists: true })
+                //send toast
+                break;
+            case "emailExists":
+                //Send toast 
+                return fail(400, { emailExists: true })
+                break
         }
     },
 };

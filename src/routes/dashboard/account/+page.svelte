@@ -4,13 +4,37 @@
   import AvatarList from "../../(components)/AvatarList.svelte";
   import Modal from "../../(components)/Modal.svelte";
   import avatar from "$lib/images/avatar.png";
+  import type { PageData, ActionData } from "./$types";
 
   export let data: PageData;
+  export let form: ActionData;
+
   let showModal: boolean;
   let showRequestModal: boolean;
 </script>
 
 <div class="wrapper">
+  {#if form?.alreadyFriend}
+    <div class="error">
+      <p>This user is already your friend.</p>
+    </div>
+  {/if}
+  {#if form?.notExistent}
+    <div class="error">
+      <p>This user does not exist.</p>
+    </div>
+  {/if}
+  {#if form?.cantSelf}
+    <div class="error">
+      <p>You can't send yourself a friend request.</p>
+    </div>
+  {/if}
+  {#if form?.alreadyRequested}
+    <div class="error">
+      <p>This user already has a pending frined request from you.</p>
+    </div>
+  {/if}
+
   <div class="grid">
     <div class="cardWrapper">
       <ProfileCard user={data.user} logoutBtn={true} />
@@ -128,7 +152,6 @@
 
 <style>
   .wrapper {
-    height: 100dvh;
     width: 100dvw;
     display: flex;
     justify-content: center;
@@ -251,6 +274,34 @@
   .cross path {
     stroke: var(--color-red);
     fill: var(--color-red);
+  }
+
+  .error {
+    position: absolute;
+    top: 0;
+    background-color: var(--color-red);
+    border-radius: 30px;
+    padding-left: 1%;
+    padding-right: 1%;
+    margin-top: 1%;
+    font-size: 1.5em;
+    animation-name: disapear;
+    animation-duration: 6s;
+    animation-iteration-count: 1;
+    opacity: 0;
+  }
+
+  @keyframes disapear {
+    0% {
+      opacity: 1;
+      display: block;
+    }
+    70% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0;
+    }
   }
 
   @media screen and (max-width: 991px) {

@@ -1,8 +1,22 @@
-<script>
+<script lang="ts">
+    import type { PageData, ActionData } from "./$types";
     import "../style.css";
+    import Footer from "../(components)/Footer.svelte";
+
+    export let form: ActionData;
 </script>
 
 <div class="wrapper">
+    {#if form?.nameExists}
+        <div class="error">
+            <p>The name already exists</p>
+        </div>
+    {/if}
+    {#if form?.emailExists}
+        <div class="error">
+            <p>The email already exists</p>
+        </div>
+    {/if}
     <div class="form-wrapper">
         <h1>Welcome 👋</h1>
         <form method="POST">
@@ -24,6 +38,9 @@
         </form>
         <p>Already have an account? Go to <a href="/login">Login</a></p>
     </div>
+    <div class="footerWrapper">
+        <Footer />
+    </div>
 </div>
 
 <style>
@@ -39,6 +56,7 @@
             rgba(42, 46, 46, 1) 25%,
             rgba(4, 4, 4, 1) 100%
         );
+        flex-direction: column;
     }
 
     .form-wrapper {
@@ -83,5 +101,38 @@
 
     a {
         color: var(--color-text);
+    }
+
+    .error {
+        position: absolute;
+        top: 0;
+        background-color: var(--color-red);
+        border-radius: 30px;
+        padding-left: 1%;
+        padding-right: 1%;
+        margin-top: 1%;
+        font-size: 1.5em;
+        animation-name: disapear;
+        animation-duration: 6s;
+        animation-iteration-count: 1;
+        opacity: 0;
+    }
+
+    @keyframes disapear {
+        0% {
+            opacity: 1;
+        }
+        70% {
+            opacity: 1;
+        }
+        100% {
+            opacity: 0;
+            display: none;
+        }
+    }
+
+    .footerWrapper {
+        position: absolute;
+        bottom: 0;
     }
 </style>

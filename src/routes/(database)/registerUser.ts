@@ -4,7 +4,7 @@ import type { Collection } from "mongodb";
 import { v4 as uuidv4 } from 'uuid';
 import bcrypt from "bcrypt";
 
-export async function registerUser(userName: string, email: string, password: string): Promise<boolean> {
+export async function registerUser(userName: string, email: string, password: string): Promise<string> {
     connect();
 
     const userId = uuidv4();
@@ -17,15 +17,15 @@ export async function registerUser(userName: string, email: string, password: st
     const emailResult = await usersCollection.findOne({ email: email.toLowerCase() });
 
     if (nameResult) {
-        return false;
+        return "nameExists";
     }
 
     if (emailResult) {
-        return false;
+        return "emailExists";
     }
 
     const result = await usersCollection.insertOne({ userID: userId, userName: userName, email: email.toLowerCase(), password: hashPasswd, creationDate: date });
 
     await disconnect();
-    return true;
+    return "ok";
 }

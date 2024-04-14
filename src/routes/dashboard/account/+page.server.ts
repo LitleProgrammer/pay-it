@@ -1,4 +1,4 @@
-import { redirect } from "@sveltejs/kit";
+import { fail, redirect } from "@sveltejs/kit";
 import { checkUserToken } from "../../(database)/checkUserToken.js";
 import { getUserByID } from "../../(database)/getUserByID.js";
 import { addFriendToUser } from "../../(database)/addFriendToUser"
@@ -50,24 +50,21 @@ export const actions = {
         const email = data.get('email');
         switch ((await addFriendToUser(userID, email)).toString()) {
             case "ok":
-                console.log("ok");
                 break;
             case "alreadyFriend":
                 //User is already friend with this person
-                console.log("already");
+                return fail(400, { alreadyFriend: true });
                 break;
-
             case "noFriend":
                 //Friend does not exists in db
-                console.log("no");
+                return fail(400, { notExistent: true });
                 break;
-
             case "cantSelf":
                 //Friend does not exists in db
-                console.log("self");
+                return fail(400, { cantSelf: true });
                 break;
             case "alreadyRequest":
-                console.log("Already requested");
+                return fail(400, { alreadyRequested: true });
                 break;
             default:
                 break;
