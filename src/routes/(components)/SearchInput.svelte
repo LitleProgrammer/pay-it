@@ -1,24 +1,22 @@
 <script lang="ts">
+    import type { HTMLInputAttributes } from "svelte/elements";
+    interface $$Props extends Partial<HTMLInputAttributes> {}
+
+    export let value: string = "";
+    export var wipth: string = "";
+
     export var data: string[];
-    export var placeholder: string;
-    export let setValue: (selected: string) => void;
 
     var input: HTMLInputElement;
     var isFocussed: boolean = true;
-    var inputValue = "";
 
     var suggestions: string[] = [];
 
     const inputChange = () => {
-        setValue(inputValue);
         suggestions = [];
-        if (inputValue) {
+        if (value) {
             data.forEach((date) => {
-                if (
-                    date
-                        .toLocaleLowerCase()
-                        .startsWith(inputValue.toLowerCase())
-                ) {
+                if (date.toLocaleLowerCase().startsWith(value.toLowerCase())) {
                     suggestions = [...suggestions, date];
                 }
             });
@@ -26,8 +24,7 @@
     };
 
     const setInputValue = (selected: string) => {
-        inputValue = selected;
-        setValue(selected);
+        value = selected;
         if (isFocussed) {
             isFocussed = false;
             input.blur();
@@ -56,31 +53,40 @@
 
 <slot />
 
-<input
-    type="text"
-    name=""
-    id=""
-    {placeholder}
-    bind:value={inputValue}
-    bind:this={input}
-    on:keyup={inputChange}
-    on:focus={() => (isFocussed = true)}
-    on:blur={handleBlur}
-/>
+<div class="wrapper" style="width: {wipth};">
+    <input
+        type="text"
+        bind:value
+        bind:this={input}
+        on:keyup={inputChange}
+        on:focus={() => (isFocussed = true)}
+        on:blur={handleBlur}
+        {...$$restProps}
+    />
 
-{#if suggestions.length > 0 && isFocussed}
-    <ul>
-        {#each suggestions as suggestion}
-            <li class="suggesion">
-                <button type="button" on:click={() => setInputValue(suggestion)}
-                    >{suggestion}</button
-                >
-            </li>
-        {/each}
-    </ul>
-{/if}
+    {#if suggestions.length > 0 && isFocussed}
+        <ul>
+            {#each suggestions as suggestion}
+                <li class="suggesion">
+                    <button
+                        type="button"
+                        on:click={() => setInputValue(suggestion)}
+                        >{suggestion}</button
+                    >
+                </li>
+            {/each}
+        </ul>
+    {/if}
+</div>
 
 <style>
+    .wrapper {
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        align-items: center;
+    }
+
     input {
         width: 100%;
         padding-top: 1%;
@@ -89,20 +95,19 @@
         border-radius: 5px;
         border-bottom-left-radius: 0;
         border-bottom-right-radius: 0;
-        border: none;
         background-color: var(--color-bg-1);
         border: 2px solid var(--color-bg-0);
         color: var(--color-text);
     }
 
     ul {
+        width: 100%;
         position: relative;
         border: 2px solid var(--color-bg-0);
         border-radius: 5px;
         border-top-left-radius: 0;
         border-top-right-radius: 0;
         border-top: none;
-        width: 100%;
         list-style: none;
         margin: 0;
         padding: 0;

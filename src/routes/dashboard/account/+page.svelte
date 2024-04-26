@@ -5,6 +5,8 @@
   import Modal from "../../(components)/Modal.svelte";
   import avatar from "$lib/images/avatar.png";
   import type { PageData, ActionData } from "./$types";
+  import MailInput from "../../(components)/MailInput.svelte";
+  import SubmitButton from "../../(components)/SubmitButton.svelte";
 
   export let data: PageData;
   export let form: ActionData;
@@ -46,14 +48,14 @@
 
         <Modal bind:showModal>
           <form method="post" action="?/addFriend">
-            <input
-              type="email"
+            <MailInput
               name="email"
               id="email"
               placeholder="E-Mail"
               required
+              style="width:90%"
             /><br />
-            <button>Add Friend</button>
+            <SubmitButton>Add Friend</SubmitButton>
           </form>
         </Modal>
         <button on:click={() => (showModal = true)}>Add Friend</button>
