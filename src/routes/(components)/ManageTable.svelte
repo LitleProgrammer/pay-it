@@ -4,9 +4,28 @@
     import {
         faArrowRight,
         faTrashCan,
+        faPenToSquare,
     } from "@fortawesome/free-solid-svg-icons";
+    import Modal from "./Modal.svelte";
+    import CurrencyInput from "./CurrencyInput.svelte";
+    import TextInput from "./TextInput.svelte";
+    import SubmitButton from "./SubmitButton.svelte";
+    import SearchInput from "./SearchInput.svelte";
 
     export var data = { cols: [""], data: [] };
+    export var friends: string[] = [];
+
+    let showModal: boolean = false;
+    let debtID: string = "";
+    let debtObject: object = {};
+
+    function openEditModal(id: string) {
+        debtObject = data.data.find((debt) => debt.id === id) || {};
+        if (debtObject !== null && debtObject.canRemove) {
+            debtID = id;
+            showModal = true;
+        }
+    }
 </script>
 
 <div class="list">
@@ -18,19 +37,19 @@
         </tr>
         {#each data.data as { name, sum, reason, direction, id, canRemove }}
             {#if direction == "<"}
-                <tr class="tr-red">
+                <tr class="tr-red" on:click={openEditModal(id)}>
                     <td>You</td>
                     <td><Fa icon={faArrowRight} size="1.3x" /></td>
                     <td>{name}</td>
                     <td>{sum}€</td>
                     <td>{reason}</td>
-                    <td>
+                    <td class="mobile-hidden">
                         {#if canRemove}
                             <form method="post" action="?/removeDebt">
                                 <input type="hidden" name="debtID" value={id} />
                                 <button type="submit"
                                     ><Fa
-                                        icon={faTrashCan}
+                                        icon={faPenToSquare}
                                         size="1.7x"
                                     /></button
                                 >
@@ -39,19 +58,19 @@
                     </td>
                 </tr>
             {:else if direction == ">"}
-                <tr class="tr-green">
+                <tr class="tr-green" on:click={openEditModal(id)}>
                     <td>{name}</td>
                     <td><Fa icon={faArrowRight} size="1.3x" /></td>
                     <td>You</td>
                     <td>{sum}€</td>
                     <td>{reason}</td>
-                    <td>
+                    <td class="mobile-hidden">
                         {#if canRemove}
                             <form method="post" action="?/removeDebt">
                                 <input type="hidden" name="debtID" value={id} />
                                 <button type="submit"
                                     ><Fa
-                                        icon={faTrashCan}
+                                        icon={faPenToSquare}
                                         size="1.7x"
                                     /></button
                                 >
@@ -62,6 +81,32 @@
             {/if}
         {/each}
     </table>
+</div>
+
+<div class="modal">
+    <Modal bind:showModal>
+        <div class="editDebtModal">
+            <h1>Edit debt</h1>
+            <SearchInput
+                data={friends}
+                name="username"
+                placeholder="Username"
+                wipth="90%"
+                value={debtObject.name}
+            /><br />
+            <CurrencyInput
+                name="debt"
+                value={debtObject.sum}
+                style="width: 90%"
+            />
+            <TextInput
+                name="reason"
+                value={debtObject.reason}
+                style="width: 90%"
+            />
+            <SubmitButton>Save</SubmitButton>
+        </div>
+    </Modal>
 </div>
 
 <style>
@@ -77,6 +122,10 @@
         overflow-x: hidden;
     }
 
+    h1 {
+        color: var(--color-text);
+    }
+
     table {
         padding-left: 0.5%;
         padding-right: 0.5%;
@@ -89,6 +138,10 @@
     tr {
         padding-top: 20px;
         padding-bottom: 20px;
+    }
+
+    tr:hover {
+        cursor: pointer;
     }
 
     .tr-red {
@@ -122,6 +175,14 @@
         scale: 1.2;
     }
 
+    .editDebtModal {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+
     @media screen and (max-width: 991px) {
         /* start of large tablet styles */
     }
@@ -132,8 +193,17 @@
 
     @media screen and (max-width: 479px) {
         /* start of phone styles */
+        .list {
+            height: auto;
+            overflow-y: visible;
+        }
+
         table {
             font-size: 0.74em;
+        }
+
+        .mobile-hidden {
+            display: none;
         }
     }
 </style>

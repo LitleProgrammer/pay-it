@@ -59,8 +59,6 @@ async function generateDebtList(debts: [], userID: any): Promise<any[]> {
         });
 
         const debtDocs = ((await Promise.all(debtsDocsPromises)).filter(doc => doc !== null));
-        console.log(debtDocs);
-
         return debtDocs;
     }
     return [];

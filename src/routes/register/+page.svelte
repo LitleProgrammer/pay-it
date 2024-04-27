@@ -2,6 +2,10 @@
     import type { PageData, ActionData } from "./$types";
     import "../style.css";
     import Footer from "../(components)/Footer.svelte";
+    import TextInput from "../(components)/TextInput.svelte";
+    import MailInput from "../(components)/MailInput.svelte";
+    import PasswordInput from "../(components)/PasswordInput.svelte";
+    import SubmitButton from "../(components)/SubmitButton.svelte";
 
     export let form: ActionData;
 </script>
@@ -20,21 +24,11 @@
     <div class="form-wrapper">
         <h1>Welcome 👋</h1>
         <form method="POST">
-            <input
-                type="text"
-                name="username"
-                placeholder="Username"
-                required
-            /><br />
-            <input type="email" name="email" placeholder="E-Mail" required /><br
+            <TextInput name="username" placeholder="Username" required /><br />
+            <MailInput name="email" placeholder="E-Mail" required /><br />
+            <PasswordInput name="password" placeholder="Password" required /><br
             />
-            <input
-                type="password"
-                name="password"
-                placeholder="Password"
-                required
-            /><br />
-            <button>Register</button>
+            <SubmitButton>Register</SubmitButton>
         </form>
         <p>Already have an account? Go to <a href="/login">Login</a></p>
     </div>

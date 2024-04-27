@@ -19,6 +19,7 @@
         name="username"
         placeholder="Username"
         wipth="90%"
+        required
     /> <br />
     <CurrencyInput
         placeholder="Debt in €"

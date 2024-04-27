@@ -7,11 +7,12 @@
     import Modal from "../../(components)/Modal.svelte";
     import SearchInput from "../../(components)/SearchInput.svelte";
     import NewDebtForm from "../../(components)/NewDebtForm.svelte";
+    import ActionButton from "../../(components)/ActionButton.svelte";
 
     export let data: PageData;
 
     const debtList = {
-        cols: ["Debtor", "", "Creditor", "Sum", "Reason", ""],
+        cols: ["Debtor", "", "Creditor", "Sum", "Reason"],
         data: data.debts,
     };
 
@@ -21,7 +22,9 @@
 <div class="manage">
     <div class="sidebar wrapper">
         <div class="buttonWrapper">
-            <button on:click={() => (showModal = true)}>Add debt</button>
+            <ActionButton clickAction={() => (showModal = true)}
+                >Add debt</ActionButton
+            >
             <div class="modalWrapper">
                 <Modal bind:showModal>
                     <NewDebtForm friendNames={data.friends} />
@@ -31,7 +34,7 @@
     </div>
 
     <div class="openList wrapper">
-        <Table data={debtList} />
+        <Table data={debtList} friends={data.friends} />
     </div>
 </div>
 

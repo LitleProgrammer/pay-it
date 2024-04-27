@@ -50,6 +50,7 @@ export const actions = {
         const email = data.get('email');
         switch ((await addFriendToUser(userID, email)).toString()) {
             case "ok":
+                redirect(303, "/dashboard/account");
                 break;
             case "alreadyFriend":
                 //User is already friend with this person
