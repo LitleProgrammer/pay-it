@@ -51,10 +51,13 @@
 </script>
 
 <div class="dashboard">
-    <div class="listWrapper">
-        <h1>Recent activity:</h1>
-        <List data={listData} />
-    </div>
+    <h1>
+        Nothing here at the moment! <br />Manage your debts in the
+        <a href="/dashboard/manage">manage</a> tab or edit your account in the
+        <a href="/dashboard/account">account</a>
+        tab
+    </h1>
+    <h1></h1>
 </div>
 
 <style>
@@ -92,5 +95,14 @@
             1px -1px 0 var(--color-bg-1),
             -1px 1px 0 var(--color-bg-1),
             1px 1px 0 var(--color-bg-1);
+    }
+
+    a {
+        color: var(--color-text);
+    }
+
+    h1 {
+        text-align: center;
+        font-size: 2.3em;
     }
 </style>

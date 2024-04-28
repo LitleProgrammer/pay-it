@@ -3,7 +3,6 @@
   import type { PageData } from "../$types";
   import AvatarList from "../../(components)/AvatarList.svelte";
   import Modal from "../../(components)/Modal.svelte";
-  import avatar from "$lib/images/avatar.png";
   import type { PageData, ActionData } from "./$types";
   import MailInput from "../../(components)/MailInput.svelte";
   import SubmitButton from "../../(components)/SubmitButton.svelte";
@@ -139,7 +138,11 @@
                   />
                   <!-- using this custome variable to set the z-index to get the stacking look-->
                 {:else}
-                  <img src={avatar} alt="Useravatar" class="userAvatarModal" />
+                  <img
+                    src="https://api.dicebear.com/8.x/identicon/png?seed={user.userName}&backgroundColor=b6e3f4,c0aede,d1d4f9&size=128"
+                    alt="Useravatar"
+                    class="userAvatarModal"
+                  />
                   <!-- using this custome variable to set the z-index to get the stacking look-->
                 {/if}
                 <p>{friend.userName}</p>

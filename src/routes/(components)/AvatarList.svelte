@@ -1,20 +1,31 @@
 <script lang="ts">
     import "../style.css";
     import Modal from "./Modal.svelte";
-    import avatar from '$lib/images/avatar.png';
 
     export var friends: any[];
     var showModal: boolean;
 </script>
 
-<button on:click={() => showModal = true}>
+<button on:click={() => (showModal = true)}>
     <div class="avatarList">
         {#each friends as friend, i}
             {#if i < 8}
                 {#if friend.picture}
-                    <img src={friend.picture} alt="Useravatar" class="userAvatar" style="--z: {i}"> <!-- using this custome variable to set the z-index to get the stacking look-->
+                    <img
+                        src={friend.picture}
+                        alt="Useravatar"
+                        class="userAvatar"
+                        style="--z: {i}"
+                    />
+                    <!-- using this custome variable to set the z-index to get the stacking look-->
                 {:else}
-                    <img src={avatar} alt="Useravatar" class="userAvatar" style="--z: {i}"> <!-- using this custome variable to set the z-index to get the stacking look-->    
+                    <img
+                        src="https://api.dicebear.com/8.x/identicon/png?seed={friend.userName}&backgroundColor=b6e3f4,c0aede,d1d4f9&size=128"
+                        alt="Useravatar"
+                        class="userAvatar"
+                        style="--z: {i}"
+                    />
+                    <!-- using this custome variable to set the z-index to get the stacking look-->
                 {/if}
             {/if}
         {/each}
@@ -29,9 +40,17 @@
         {#each friends as friend, i}
             <div class="avatarWrapper">
                 {#if friend.picture}
-                    <img src={friend.picture} alt="Useravatar" class="userAvatarModal">
+                    <img
+                        src={friend.picture}
+                        alt="Useravatar"
+                        class="userAvatarModal"
+                    />
                 {:else}
-                    <img src={avatar} alt="Useravatar" class="userAvatarModal">
+                    <img
+                        src="https://api.dicebear.com/8.x/identicon/png?seed={friend.userName}&backgroundColor=b6e3f4,c0aede,d1d4f9&size=128"
+                        alt="Useravatar"
+                        class="userAvatarModal"
+                    />
                 {/if}
                 <p>{friend.userName}</p>
             </div>
@@ -39,11 +58,10 @@
     </div>
 </Modal>
 
-
 <style>
     :root {
         --avatar-size: 72px;
-        --avatar-shaddow: -10px 0px 4px 0px rgba(0,0,0,0.63);
+        --avatar-shaddow: -10px 0px 4px 0px rgba(0, 0, 0, 0.63);
         --avatar-spacing: -25px;
     }
 
@@ -109,6 +127,5 @@
         object-fit: cover;
         border-radius: 50%;
         margin: 1%;
-        
     }
 </style>

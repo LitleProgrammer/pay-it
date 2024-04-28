@@ -6,6 +6,7 @@ import { getUserByName } from "../../(database)/getUserByName.js";
 import { addDebt } from "../../(database)/addDebt.js";
 import { getDebtByID } from "../../(database)/getDebtByID.js";
 import { removeDebt } from "../../(database)/removeDebt.js";
+import { editDebt } from "../../(database)/editDebt.js";
 
 export async function load({ cookies }) {
     let id: string = cookies.get('userID') || '';
@@ -83,4 +84,14 @@ export const actions = {
         await removeDebt(id, debtID);
         redirect(303, '/dashboard/manage');
     },
+    editDebt: async ({ cookies, request }) => {
+        const data = await request.formData();
+        const debt = data.get('debt');
+        const reason = data.get('reason');
+        const debtID = data.get('debtID');
+        const id = cookies.get('userID');
+
+        await editDebt(id, debt, reason, debtID);
+        redirect(303, '/dashboard/manage');
+    }
 };

@@ -1,11 +1,8 @@
 <script lang="ts">
     import Table from "../../(components)/ManageTable.svelte";
     import "../../style.css";
-    import Fa from "svelte-fa";
     import type { PageData } from "../$types";
-    import { faPlus } from "@fortawesome/free-solid-svg-icons";
     import Modal from "../../(components)/Modal.svelte";
-    import SearchInput from "../../(components)/SearchInput.svelte";
     import NewDebtForm from "../../(components)/NewDebtForm.svelte";
     import ActionButton from "../../(components)/ActionButton.svelte";
 

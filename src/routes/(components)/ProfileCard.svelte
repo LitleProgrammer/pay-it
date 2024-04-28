@@ -1,5 +1,4 @@
 <script lang="ts">
-    import avatar from "$lib/images/avatar.png";
     import "../style.css";
 
     export var user: {};
@@ -11,7 +10,11 @@
     {#if user.picture}
         <img class="profileImage" src={user.picture} alt="" />
     {:else}
-        <img class="profileImage" src={avatar} alt="" />
+        <img
+            class="profileImage"
+            src="https://api.dicebear.com/8.x/identicon/png?seed={user.userName}&backgroundColor=b6e3f4,c0aede,d1d4f9&size=128"
+            alt=""
+        />
     {/if}
     <div class="information">
         <h2>{user.userName}</h2>

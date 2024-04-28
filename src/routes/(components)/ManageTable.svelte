@@ -1,16 +1,11 @@
 <script lang="ts">
     import "../style.css";
     import Fa from "svelte-fa";
-    import {
-        faArrowRight,
-        faTrashCan,
-        faPenToSquare,
-    } from "@fortawesome/free-solid-svg-icons";
+    import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
     import Modal from "./Modal.svelte";
     import CurrencyInput from "./CurrencyInput.svelte";
     import TextInput from "./TextInput.svelte";
     import SubmitButton from "./SubmitButton.svelte";
-    import SearchInput from "./SearchInput.svelte";
 
     export var data = { cols: [""], data: [] };
     export var friends: string[] = [];
@@ -21,6 +16,7 @@
 
     function openEditModal(id: string) {
         debtObject = data.data.find((debt) => debt.id === id) || {};
+
         if (debtObject !== null && debtObject.canRemove) {
             debtID = id;
             showModal = true;
@@ -37,46 +33,26 @@
         </tr>
         {#each data.data as { name, sum, reason, direction, id, canRemove }}
             {#if direction == "<"}
-                <tr class="tr-red" on:click={openEditModal(id)}>
+                <tr
+                    class="tr-red {canRemove ? 'cursorPointer' : ''}"
+                    on:click={openEditModal(id)}
+                >
                     <td>You</td>
                     <td><Fa icon={faArrowRight} size="1.3x" /></td>
                     <td>{name}</td>
                     <td>{sum}€</td>
                     <td>{reason}</td>
-                    <td class="mobile-hidden">
-                        {#if canRemove}
-                            <form method="post" action="?/removeDebt">
-                                <input type="hidden" name="debtID" value={id} />
-                                <button type="submit"
-                                    ><Fa
-                                        icon={faPenToSquare}
-                                        size="1.7x"
-                                    /></button
-                                >
-                            </form>
-                        {/if}
-                    </td>
                 </tr>
             {:else if direction == ">"}
-                <tr class="tr-green" on:click={openEditModal(id)}>
+                <tr
+                    class="tr-green {canRemove ? 'cursorPointer' : ''}"
+                    on:click={openEditModal(id)}
+                >
                     <td>{name}</td>
                     <td><Fa icon={faArrowRight} size="1.3x" /></td>
                     <td>You</td>
                     <td>{sum}€</td>
                     <td>{reason}</td>
-                    <td class="mobile-hidden">
-                        {#if canRemove}
-                            <form method="post" action="?/removeDebt">
-                                <input type="hidden" name="debtID" value={id} />
-                                <button type="submit"
-                                    ><Fa
-                                        icon={faPenToSquare}
-                                        size="1.7x"
-                                    /></button
-                                >
-                            </form>
-                        {/if}
-                    </td>
                 </tr>
             {/if}
         {/each}
@@ -86,25 +62,28 @@
 <div class="modal">
     <Modal bind:showModal>
         <div class="editDebtModal">
-            <h1>Edit debt</h1>
-            <SearchInput
-                data={friends}
-                name="username"
-                placeholder="Username"
-                wipth="90%"
-                value={debtObject.name}
-            /><br />
-            <CurrencyInput
-                name="debt"
-                value={debtObject.sum}
-                style="width: 90%"
-            />
-            <TextInput
-                name="reason"
-                value={debtObject.reason}
-                style="width: 90%"
-            />
-            <SubmitButton>Save</SubmitButton>
+            <form action="?/editDebt" method="post">
+                <h1>Edit debt</h1>
+                <input type="hidden" name="debtID" value={debtObject.id} />
+                <CurrencyInput
+                    name="debt"
+                    value={debtObject.sum}
+                    style="width: 90%"
+                    placeholder="Debt"
+                />
+                <TextInput
+                    name="reason"
+                    value={debtObject.reason}
+                    style="width: 90%"
+                    maxlength="64"
+                    placeholder="Reason"
+                />
+                <SubmitButton>Save</SubmitButton>
+            </form>
+            <form action="?/removeDebt" method="post">
+                <input type="hidden" name="debtID" value={debtObject.id} />
+                <SubmitButton>Delete</SubmitButton>
+            </form>
         </div>
     </Modal>
 </div>
@@ -140,7 +119,7 @@
         padding-bottom: 20px;
     }
 
-    tr:hover {
+    .cursorPointer:hover {
         cursor: pointer;
     }
 
@@ -175,9 +154,9 @@
         scale: 1.2;
     }
 
-    .editDebtModal {
-        width: 100%;
+    .editDebtModal form {
         display: flex;
+        width: 100%;
         flex-direction: column;
         align-items: center;
         justify-content: center;
